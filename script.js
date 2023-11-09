@@ -1,7 +1,3 @@
-const loadImgBtn = document.getElementById("load-img");
-const loadSecondaryImgBtn = document.getElementById("load-secondary-img");
-const cardsRow = document.getElementById("cardsRow");
-
 const loadImage = async function (api) {
   try {
     const response = await fetch(api, {
@@ -15,6 +11,7 @@ const loadImage = async function (api) {
       throw new Error("General fetching error");
     }
 
+    const cardsRow = document.getElementById("cardsRow");
     cardsRow.innerHTML = "";
 
     const img = await response.json();
@@ -61,31 +58,40 @@ const loadImage = async function (api) {
       cardBtnHide.addEventListener("click", function () {
         col.remove();
       });
+
+      const cardImg = col.querySelector(".card-img-top");
+      cardImg.addEventListener("click", function () {
+        col.remove();
+      });
     });
   } catch (err) {
     console.log("Errore:", err);
   }
 };
 
-let url;
+window.onload = () => {
+  const loadImgBtn = document.getElementById("load-img");
+  const loadSecondaryImgBtn = document.getElementById("load-secondary-img");
 
-loadImgBtn.addEventListener("click", function () {
-  url = "https://api.pexels.com/v1/search?query=water";
-  loadImage(url);
-});
+  let url;
 
-loadSecondaryImgBtn.addEventListener("click", function () {
-  url = "https://api.pexels.com/v1/search?query=car";
-  loadImage(url);
-});
+  loadImgBtn.addEventListener("click", function () {
+    url = "https://api.pexels.com/v1/search?query=water";
+    loadImage(url);
+  });
 
-const searchForm = document.getElementById("search-form");
-const searchInput = document.getElementById("search-img");
+  loadSecondaryImgBtn.addEventListener("click", function () {
+    url = "https://api.pexels.com/v1/search?query=car";
+    loadImage(url);
+  });
 
-searchForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  const query = searchInput.value;
-  //   console.log(query);
-  url = `https://api.pexels.com/v1/search?query=${query}`;
-  loadImage(url);
-});
+  const searchForm = document.getElementById("search-form");
+  const searchInput = document.getElementById("search-img");
+
+  searchForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const query = searchInput.value;
+    url = `https://api.pexels.com/v1/search?query=${query}`;
+    loadImage(url);
+  });
+};
