@@ -1,5 +1,6 @@
 const loadImgBtn = document.getElementById("load-img");
 const loadSecondaryImgBtn = document.getElementById("load-secondary-img");
+const cardsRow = document.getElementById("cardsRow");
 
 const loadImage = async function (api) {
   try {
@@ -13,6 +14,8 @@ const loadImage = async function (api) {
     if (!response.ok) {
       throw new Error("General fetching error");
     }
+
+    cardsRow.innerHTML = "";
 
     const img = await response.json();
     const imgArr = img.photos;
@@ -52,7 +55,6 @@ const loadImage = async function (api) {
             </div>
         </div>`;
 
-      const cardsRow = document.getElementById("cardsRow");
       cardsRow.appendChild(col);
 
       const cardBtnHide = col.querySelector(".hide-btn");
@@ -74,5 +76,16 @@ loadImgBtn.addEventListener("click", function () {
 
 loadSecondaryImgBtn.addEventListener("click", function () {
   url = "https://api.pexels.com/v1/search?query=car";
+  loadImage(url);
+});
+
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-img");
+
+searchForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const query = searchInput.value;
+  //   console.log(query);
+  url = `https://api.pexels.com/v1/search?query=${query}`;
   loadImage(url);
 });
