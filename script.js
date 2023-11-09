@@ -20,12 +20,12 @@ const loadImage = async function (api) {
 
     imgArr.forEach((img) => {
       const col = document.createElement("div");
-      col.classList = "col-md-4";
+      col.classList = "col-md-4 mb-4";
 
       col.innerHTML = `
-        <div class="card mb-4 shadow-sm">
-            <img class="card-img-top object-fit-cover" src="${img.src.original}" alt="${img.alt}" />
-            <div class="card-body">
+        <div class="card h-100 shadow-sm">
+            <img class="card-img-top h-75" src="${img.src.original}" alt="${img.alt}" style="object-fit: cover"/>
+            <div class="card-body h-25 p-3">
                 <h5 class="card-title text-truncate">${img.alt}</h5>
                 <p class="card-text">
                     This is a wider card with supporting text below as a natural
